@@ -1,11 +1,17 @@
 <template>
   <div id="app">
-    <input type="text" class="search" placeholder="Search gun..." />
-    <div class="guns">
-      <ul v-for="(arr, cat, i) in guns" :key="i" :class="[`cat`, `cat--${cat}`]">
-        <li :class="[`cat__li`, `cat__title`]">{{cat}}</li>
-        <li v-for="(gun, i) in arr" :key="i" :class="[`cat__li`]">{{gun}}</li>
-      </ul>
+    <div class="display">
+      <table></table>
+    </div>
+    <div class="guns-wrap">
+      <div class="guns">
+        <ul v-for="(arr, cat, i) in guns" :key="i" :class="[`cat`, `cat--${cat}`]">
+          <li :class="[`cat__li`, `cat__title`]">{{cat}}</li>
+          <li v-for="(gun, i) in arr" :key="i" :class="[`cat__li`]">
+            <p>{{gun}}{{jsonSmgs}}</p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -30,6 +36,20 @@ export default {
         pistols: ["P2020", "RE-45", "Wingman", "Mozambique"]
       }
     };
+  },
+  asyncComputed: {
+    jsonSmgs() {
+      fetch("../src/data/smgs.json", {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json"
+        }
+      }).then(response => {
+        //response.json().then(data => console.log(data));
+        response.text().then(data => console.log(data));
+      });
+      return 5;
+    }
   }
 };
 </script>
@@ -43,8 +63,15 @@ export default {
   box-sizing: border-box;
 }
 
+:root {
+  --color-a: #102542;
+  --color-b: #f87060;
+  --color-c: #cdd7d6;
+}
+
 html,
-body {
+body,
+#app {
   position: relative;
   width: 100%;
   height: 100%;
@@ -56,30 +83,53 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
+}
+
+.display {
+  flex: 16;
+  background: var(--color-c);
+  height: 100%;
+}
+
+.guns-wrap {
+  flex: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .guns {
-  margin-top: 12vmin;
-  display: flex;
-  flex-direction: row;
-  background: pink;
-  justify-content: space-between;
+  width: 60%;
+  column-count: 2;
+  column-gap: 4vmin;
 }
 
 .cat {
-  border: 1px solid black;
   list-style-type: none;
-  margin-right: 4vmin;
-}
-
-.cat__title {
-  font-weight: 600;
-  text-transform: uppercase;
+  margin-bottom: 4vmin;
+  break-inside: avoid;
 }
 
 .cat__li {
+  color: #333333ee;
   line-height: 4.2vmin;
   font-size: 2.6vmin;
+}
+
+.cat__li p {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cat__li p:hover {
+  color: var(--color-b);
+}
+
+.cat__li.cat__title {
+  color: var(--color-a);
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 </style>

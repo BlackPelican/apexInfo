@@ -1,0 +1,20 @@
+{
+    "r-99": {
+        "name": "R-99",
+        "damage": "11",
+        "headshot_multiplier": "1.5",
+        "rate_of_fire": "1080",
+        "dps": "198",
+        "tactical_reload": "1.8",
+        "empty_reload": "2.45",
+        "ammo_type": "light",
+        "projectile_speed": "525",
+        "draw_time": "0.35",
+        "holster_time": "0.3",
+        "base_mag": "20",
+        "small_mag": "22",
+        "mid_mag": "24",
+        "big_mag": "27",
+        "strafe_speed": "86"
+    }
+}
