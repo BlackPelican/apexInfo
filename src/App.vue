@@ -1,14 +1,19 @@
 <template>
   <div id="app">
     <div class="display">
-      <table></table>
+      <table>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+        </tr>
+      </table>
     </div>
     <div class="guns-wrap">
       <div class="guns">
         <ul v-for="(arr, cat, i) in guns" :key="i" :class="[`cat`, `cat--${cat}`]">
           <li :class="[`cat__li`, `cat__title`]">{{cat}}</li>
           <li v-for="(gun, i) in arr" :key="i" :class="[`cat__li`]">
-            <p>{{gun}}{{jsonSmgs}}</p>
+            <p>{{gun}}</p>
           </li>
         </ul>
       </div>
@@ -37,18 +42,19 @@ export default {
       }
     };
   },
+  methods: {
+    async getJson(path) {
+      const result = await fetch(path);
+      const data = await result.json();
+      console.log(data);
+      console.log(JSON.parse(data));
+    }
+  },
   asyncComputed: {
     jsonSmgs() {
-      fetch("../src/data/smgs.json", {
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json"
-        }
-      }).then(response => {
-        //response.json().then(data => console.log(data));
-        response.text().then(data => console.log(data));
-      });
-      return 5;
+      return this.getJson(
+        "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/BlackPelican/ApexLegendsWeaponStats/master/smgs.json"
+      );
     }
   }
 };
@@ -131,5 +137,12 @@ body {
   text-decoration: none;
   font-weight: 600;
   text-transform: uppercase;
+}
+
+table {
+  border: 1px solid black;
+}
+
+td {
 }
 </style>
