@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <div class="display">
-      <table>
-        <tr>
-          <td>a</td>
-          <td>b</td>
+      <h1>{{selected.toUpperCase()}}</h1>
+      <table v-if="jsonSmgs">
+        <tr v-for="(val, key, i) in jsonSmgs[selected]" :key="i">
+          <td>{{key}}</td>
+          <td>{{val}}</td>
         </tr>
       </table>
     </div>
@@ -39,15 +40,15 @@ export default {
         ],
         shotguns: ["Peacekeeper", "Eva-8", "Mastiff"],
         pistols: ["P2020", "RE-45", "Wingman", "Mozambique"]
-      }
+      },
+      selected: "r-99"
     };
   },
   methods: {
     async getJson(path) {
       const result = await fetch(path);
       const data = await result.json();
-      console.log(data);
-      console.log(JSON.parse(data));
+      return data;
     }
   },
   asyncComputed: {
