@@ -1,20 +1,21 @@
 <template>
   <div id="app">
-    <div class="display">
-      <h1>{{selected.toUpperCase()}}</h1>
-      <table v-if="jsonSmgs">
+    <div class="wrap wrap--stats">
+      <h1 class="title title--display">{{selected.toUpperCase()}}</h1>
+      <table class="display__table" v-if="jsonSmgs">
         <tr v-for="(val, key, i) in jsonSmgs[selected]" :key="i">
-          <td>{{key}}</td>
-          <td>{{val}}</td>
+          <td class="table__data table__data--key">{{key}}</td>
+          <td class="table__data table__data--val">{{val}}</td>
         </tr>
       </table>
+      <h1 class="title title--display" v-else>Fetching data...</h1>
     </div>
-    <div class="guns-wrap">
+    <div class="wrap wrap--guns">
       <div class="guns">
         <ul v-for="(arr, cat, i) in guns" :key="i" :class="[`cat`, `cat--${cat}`]">
-          <li :class="[`cat__li`, `cat__title`]">{{cat}}</li>
+          <li :class="[`title`, `title--cat`]">{{cat}}</li>
           <li v-for="(gun, i) in arr" :key="i" :class="[`cat__li`]">
-            <p>{{gun}}</p>
+            <p @mouseover="setSelected(gun.toLowerCase())">{{gun}}</p>
           </li>
         </ul>
       </div>
@@ -49,6 +50,9 @@ export default {
       const result = await fetch(path);
       const data = await result.json();
       return data;
+    },
+    setSelected(selected) {
+      this.selected = selected;
     }
   },
   asyncComputed: {
@@ -62,7 +66,8 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,600,700&display=swap");
 
 * {
   margin: 0;
@@ -71,9 +76,11 @@ export default {
 }
 
 :root {
-  --color-a: #102542;
-  --color-b: #f87060;
-  --color-c: #cdd7d6;
+  --color-white: #fff;
+  --color-whitish: #e8e9eb;
+  --color-black: #313638;
+  --color-blackish: #313638ee;
+  --color-accent: #d33f49;
 }
 
 html,
@@ -82,7 +89,7 @@ body,
   position: relative;
   width: 100%;
   height: 100%;
-  font-family: "Open Sans";
+  font-family: "Roboto";
 }
 
 #app,
@@ -93,57 +100,83 @@ body {
   flex-direction: row;
 }
 
-.display {
-  flex: 16;
-  background: var(--color-c);
-  height: 100%;
+.title {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: "Roboto Slab";
+  color: var(--color-black);
+  letter-spacing: 0.2vmin;
 }
 
-.guns-wrap {
-  flex: 10;
+.wrap {
+  height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  flex-direction: column;
+  padding-bottom: 10vmin;
+}
+
+.wrap--stats {
+  background: var(--color-white);
+  flex: 16;
+}
+
+.wrap--guns {
+  background: var(--color-whitish);
+  flex: 10;
+}
+
+.title--display {
+  margin-bottom: 4vmin;
+}
+
+.table__data {
+  font-size: 2.6vmin;
+  line-height: 4.2vmin;
+}
+
+.table__data--key {
+  min-width: 30vmin;
+  color: var(--color-blackish);
+}
+
+.table__data--val {
+  font-weight: 600;
+  color: var(--color-black);
 }
 
 .guns {
-  width: 60%;
   column-count: 2;
-  column-gap: 4vmin;
+}
+
+.guns,
+.display__table {
+  min-width: 40vmin;
 }
 
 .cat {
   list-style-type: none;
-  margin-bottom: 4vmin;
   break-inside: avoid;
 }
 
-.cat__li {
-  color: #333333ee;
+.cat:not(:last-child) {
+  margin-bottom: 4vmin;
+}
+
+.cat__li,
+.title--cat {
   line-height: 4.2vmin;
   font-size: 2.6vmin;
 }
 
 .cat__li p {
+  color: var(--color-blackish);
   text-decoration: underline;
   cursor: pointer;
 }
 
 .cat__li p:hover {
-  color: var(--color-b);
-}
-
-.cat__li.cat__title {
-  color: var(--color-a);
-  text-decoration: none;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-table {
-  border: 1px solid black;
-}
-
-td {
+  color: var(--color-accent);
 }
 </style>
