@@ -70,7 +70,7 @@ export default {
   asyncComputed: {
     jsonGuns() {
       return this.getJson(
-        "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/BlackPelican/apexInfo/dev/guns.json"
+        "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/BlackPelican/apexInfo/master/src/guns.json"
       );
     }
   }
