@@ -58,7 +58,7 @@ export default {
   asyncComputed: {
     jsonGuns() {
       return this.getJson(
-        "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/BlackPelican/ApexLegendsWeaponStats/master/guns.json"
+        "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/BlackPelican/apexInfo/master/src/guns.json?token=AOAGOVPOQEATMQVCYVH2IPS6QNYEM"
       );
     }
   }
@@ -144,6 +144,7 @@ body {
 .table__data--val {
   font-weight: 600;
   color: var(--color-black);
+  min-width: 15vmin;
 }
 
 .guns {
@@ -218,6 +219,10 @@ body {
     font-size: 3vmin;
     line-height: 4.8vmin;
   }
+
+  .table__data--val {
+    min-width: 20vmin;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -230,6 +235,10 @@ body {
 
   .title--display {
     font-size: 6.47vmin;
+  }
+
+  .table__data--val {
+    min-width: 22vmin;
   }
 }
 </style>
