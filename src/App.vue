@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div class="wrap wrap--stats">
-      <h1 class="title title--display">{{selected.toUpperCase()}}</h1>
-      <table class="display__table" v-if="jsonSmgs">
-        <tr v-for="(val, key, i) in jsonSmgs[selected]" :key="i">
+      <h1 v-if="jsonGuns" class="title title--display">{{selected.toUpperCase()}}</h1>
+      <table class="display__table" v-if="jsonGuns">
+        <tr v-for="(val, key, i) in jsonGuns[selected]" :key="i">
           <td class="table__data table__data--key">{{key}}</td>
           <td class="table__data table__data--val">{{val}}</td>
         </tr>
@@ -56,9 +56,9 @@ export default {
     }
   },
   asyncComputed: {
-    jsonSmgs() {
+    jsonGuns() {
       return this.getJson(
-        "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/BlackPelican/ApexLegendsWeaponStats/master/smgs.json"
+        "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/BlackPelican/ApexLegendsWeaponStats/master/guns.json"
       );
     }
   }
@@ -87,8 +87,8 @@ html,
 body,
 #app {
   position: relative;
-  width: 100%;
   height: 100%;
+  width: 100%;
   font-family: "Roboto";
 }
 
@@ -174,9 +174,62 @@ body {
   color: var(--color-blackish);
   text-decoration: underline;
   cursor: pointer;
+  letter-spacing: 0.1vmin;
 }
 
 .cat__li p:hover {
   color: var(--color-accent);
+}
+
+@media screen and (max-width: 1024px) {
+  html,
+  body,
+  #app {
+    height: auto;
+  }
+
+  #app {
+    flex-direction: column;
+  }
+
+  .wrap {
+    padding: 10vmax 0;
+    justify-content: center;
+  }
+
+  .wrap--guns,
+  .wrap--stats {
+    width: 100%;
+    flex: 1;
+  }
+
+  .guns,
+  .display__table {
+    min-width: 60vmin;
+  }
+
+  .title--display {
+    font-size: 4.8vmin;
+  }
+
+  .cat__li,
+  .title--cat,
+  .table__data {
+    font-size: 3vmin;
+    line-height: 4.8vmin;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .cat__li,
+  .title--cat,
+  .table__data {
+    font-size: 4vmin;
+    line-height: 6.47vmin;
+  }
+
+  .title--display {
+    font-size: 6.47vmin;
+  }
 }
 </style>
